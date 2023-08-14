@@ -1,0 +1,277 @@
+import java.util.*;
+import java.io.*;
+
+class Student_Information 
+{
+    private String Student_Name;
+    private int Age;
+    private int Roll_Number; 
+    private String Grade; 
+    private int Percentage;
+    private int Student_id;
+    public Student_Information(String Student_Name, int Age, int Roll_Number,
+    String Grade , int Percentage, int Student_id)
+    {
+        this.Student_Name = Student_Name; 
+        this.Age = Age;
+        this.Roll_Number = Roll_Number;
+        this.Grade = Grade;
+        this.Percentage = Percentage;
+        this.Student_id = Student_id;
+    }
+
+    public String getStudent_Name() 
+    {
+        return Student_Name;
+    }
+    public int getAge() 
+    {
+        return Age;
+    }
+
+    public int getRollNumber() 
+    {
+        return Roll_Number;
+    }
+
+    public String getGrade() 
+    {
+        return Grade;
+    } 
+    public int getPercentage() 
+    {
+        return Percentage;
+    }
+    public int getStudent_id()
+    {
+       return Student_id;
+    }
+
+    public void setName(String Student_Name) 
+    {
+        this.Student_Name = Student_Name;
+    }
+    public void setAge(int Age) 
+    { 
+        this.Age = Age;
+    }
+
+    public void setRollNumber(int Roll_Number) 
+    { 
+        this.Roll_Number = Roll_Number;
+    }
+
+    public void setGrade(String Grade) 
+    {
+        this.Grade = Grade;
+    }       
+    public void setPercentage(int Percentage) 
+    { 
+        this.Percentage = Percentage;
+    }
+    public void setStudent_id(int Student_id)
+    {
+        this.Student_id = Student_id;
+    }
+
+    @Override
+    public String toString() 
+    {
+       return "Name- " + Student_Name + ", Age-" +Age + ", Roll Number- " + Roll_Number + ", Grade: " + Grade + 
+       ", Percentage-" + Percentage + ",Student_id-" +Student_id ;
+    }
+}
+
+class StudentManagementSystem 
+{
+    
+    private List<Student_Information> students = new ArrayList<>();
+
+    public void Add_A_Student(Student_Information student) 
+    {
+        students.add(student);
+    }
+
+    public void Remove_A_Student(int Roll_Number) 
+    { 
+        students.removeIf(student -> student.getRollNumber() == Roll_Number);
+    }
+
+    public void Display_All_Students_Information() 
+    {
+        for (Student_Information student : students) 
+        {
+            System.out.println(student);
+        }
+    }
+    
+    public Student_Information Search_For_A_Student(int Roll_Number) 
+    { 
+        for (Student_Information student : students) 
+        {
+            if (student.getRollNumber() == Roll_Number) 
+            {
+                return student;
+            }
+        }
+        return null;
+    }
+
+    public void Save_Students_Information_To_File(String filename) 
+    {
+        try (PrintWriter ko = new PrintWriter(new FileWriter(filename))) 
+        {
+            for (Student_Information student : students) 
+            {
+                ko.println(student.getStudent_Name() + "," + student.getAge() + "," + student.getRollNumber() + ","
+                + student.getGrade()+ "," + student.getPercentage() + "," + student.getStudent_id());
+            }
+        } catch (IOException e) 
+        {
+            System.out.println("Error");
+        }
+    }
+
+    public void Load_Students_Information_From_File(String filename) 
+    {
+        try (BufferedReader ji = new BufferedReader(new FileReader(filename))) 
+        {
+            String line;
+            while ((line = ji.readLine()) != null) 
+            {
+                String[] parts = line.split(",");
+                if (parts.length == 6) 
+                {
+                    String Student_Name = parts[0];
+                    int Age = Integer.parseInt(parts[1]); 
+                    int Roll_Number = Integer.parseInt(parts[2]); 
+                    String Grade = parts[3];
+                    int Percentage = Integer.parseInt(parts[4]); 
+                    int Student_id = Integer.parseInt(parts[5]); 
+                    Student_Information student = new Student_Information(Student_Name, Age, Roll_Number, Grade , Percentage ,Student_id);
+                    students.add(student);
+                }
+            }
+        } catch (IOException e) 
+        {
+            System.out.println("Error");
+        }
+    }
+}
+
+public class StudentManagement 
+{
+    public static void main(String[] args) 
+    {
+        Scanner scanner = new Scanner(System.in);
+        StudentManagementSystem Student_Management = new StudentManagementSystem();
+
+        while (true) 
+        {
+            System.out.println("1 For Add a student");
+            System.out.println("2 For Remove a student");
+            System.out.println("3 For Display all students information");
+            System.out.println("4 For Search for a student");
+            System.out.println("5 For Save students information to file");
+            System.out.println("6 For Load students information from file");
+            
+            System.out.print("Choose one from above: ");
+            String choice = scanner.nextLine();
+
+            switch (choice) 
+            {
+                case "1":
+                    Add_A_Student(Student_Management, scanner);
+                    break;
+
+                case "2":
+                    Remove_A_Student(Student_Management, scanner);
+                    break;
+
+                case "3":
+                    Display_All_Students_Information(Student_Management);
+                    break;
+                    
+                case "4":
+                    Search_For_A_Student(Student_Management, scanner);
+                    break;
+
+                case "5":
+                    Save_Students_Information_To_File(Student_Management, scanner);
+                    break;
+
+                case "6":
+                    Load_Students_Information_From_File(Student_Management, scanner);
+                    break; 
+
+                default:
+                    System.out.println("Invalid");
+            }
+        }
+    }
+
+    private static void Add_A_Student(StudentManagementSystem Student_Management, Scanner scanner) 
+    {
+        System.out.print("Enter the name of the student- ");
+        String Student_Name = scanner.nextLine();        
+        System.out.print("Enter the Age of the student- ");
+        int Age = Integer.parseInt(scanner.nextLine()); 
+        System.out.print("Enter the roll number of the student- ");
+        int Roll_Number = Integer.parseInt(scanner.nextLine()); 
+        System.out.print("Enter the grade of the student- ");
+        String Grade = scanner.nextLine();  
+        System.out.print("Enter the percentage of the student- ");      
+        int Percentage = Integer.parseInt(scanner.nextLine());
+        System.out.print("Enter the Student id of the student- ");      
+        int Student_id = Integer.parseInt(scanner.nextLine());
+
+        Student_Information student = new Student_Information(Student_Name, Age, Roll_Number, Grade, Percentage , Student_id);
+        Student_Management.Add_A_Student(student);
+        System.out.println("Student information is added\n");
+    }
+
+    private static void Remove_A_Student(StudentManagementSystem Student_Management, Scanner scanner) 
+    {
+        System.out.print("Enter the roll number of the student which you want to remove: ");
+        int Roll_Number = Integer.parseInt(scanner.nextLine()); 
+        Student_Management.Remove_A_Student(Roll_Number);
+        System.out.println("Student information is successfully removed\n");
+    }
+
+    private static void Search_For_A_Student(StudentManagementSystem Student_Management, Scanner scanner) 
+    {
+        System.out.print("Enter the roll number of the student which you want to search: ");
+        int Roll_Number = Integer.parseInt(scanner.nextLine()); // Parse roll number to int
+        Student_Information lop = Student_Management.Search_For_A_Student(Roll_Number);
+        if (lop != null) 
+        {
+            System.out.println("Found\n");
+            System.out.println(lop);
+        } else 
+        {
+            System.out.println("Information not found\n");
+        }
+    }
+
+    private static void Display_All_Students_Information(StudentManagementSystem Student_Management) 
+    {
+        Student_Management.Display_All_Students_Information();
+        System.out.println("\n");
+    }
+
+    private static void Save_Students_Information_To_File(StudentManagementSystem Student_Management, Scanner scanner) 
+    {
+        System.out.print("Enter the filename: ");
+        String filenameSave = scanner.nextLine();
+        Student_Management.Save_Students_Information_To_File(filenameSave);
+        System.out.println("Saved successfully\n");
+    }
+
+    private static void Load_Students_Information_From_File(StudentManagementSystem Student_Management, Scanner scanner) 
+    {
+        System.out.print("Enter the filename from which you want to load students information: ");
+        String filenameLoad = scanner.nextLine();
+        Student_Management.Load_Students_Information_From_File(filenameLoad);
+        System.out.println("Loaded Successfully\n");
+    }
+}
