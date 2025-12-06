@@ -59,7 +59,7 @@ Asha,19,102,B,78,5002
 Ravi,17,103,A,91,5003
 
 
-
+---
 **Example Console Output**
 1 For Add a student
 2 For Remove a student
