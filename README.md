@@ -63,20 +63,20 @@ It provides functionalities to **add**, **view**, **search**, **delete**, **save
 ---
 
 **Example Console Output**
-1 For Add a student
-2 For Remove a student
-3 For Display all students information
-4 For Search for a student
-5 For Save students information to file
-6 For Load students information from file
+-1 For Add a student
+-2 For Remove a student
+-3 For Display all students information
+-4 For Search for a student
+-5 For Save students information to file
+-6 For Load students information from file
 
-Choose one from above: 1
-Enter the name of the student- John
-Enter the Age of the student- 18
-Enter the roll number of the student- 101
-Enter the grade of the student- A
-Enter the percentage of the student- 85
-Enter the Student id of the student- 5001
-Student information is added
+-Choose one from above: 1
+-Enter the name of the student- John
+-Enter the Age of the student- 18
+-Enter the roll number of the student- 101
+-Enter the grade of the student- A
+-Enter the percentage of the student- 85
+-Enter the Student id of the student- 5001
+-Student information is added
 
 
